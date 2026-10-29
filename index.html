@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestor de Prompts - SENA</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+  <header class="encabezado-principal">
+    <h1>Gestor de Prompts del Instructor - SENA</h1>
+    <p>Aplicación alfanumérica para crear cajas, almacenar prompts y conectarlos</p>
+  </header>
+
+  <div class="contenedor">
+    <div class="barra-estadisticas">
+      <div class="dato">📦 Cajas creadas: <strong id="contadorCajas">0</strong></div>
+      <div class="dato">📝 Prompts guardados: <strong id="contadorPrompts">0</strong></div>
+      <div class="dato">🔗 Conexiones activas: <strong id="contadorConexiones">0</strong></div>
+    </div>
+    <div class="seccion-formularios">
+      <div class="bloque-formulario">
+        <h2>1. Crear Nueva Caja</h2>
+        <p class="texto-ayuda">Define una categoría con código alfanumérico para agrupar los prompts.</p>
+
+        <form id="formCaja">
+          <div class="grupo">
+            <label for="codigoCaja">Código de la Caja (Alfanumérico):</label>
+            <input type="text" id="codigoCaja" placeholder="Ej: CJ-01, MAT-01" required maxlength="10">
+            <small>Solo letras, números y guiones (ej: PROG-1).</small>
+          </div>
+
+          <div class="grupo">
+            <label for="nombreCaja">Nombre de la Caja / Asignatura:</label>
+            <input type="text" id="nombreCaja" placeholder="Ej: Programación de Software" required maxlength="50">
+          </div>
+
+          <div class="grupo">
+            <label for="descripcionCaja">Descripción (Opcional):</label>
+            <input type="text" id="descripcionCaja" placeholder="Ej: Prompts para fichas técnicas" maxlength="100">
+          </div>
+
+          <button type="submit" class="btn btn-principal">+ Guardar Caja</button>
+        </form>
+      </div>
+
+      <div class="bloque-formulario">
+        <div class="cabecera-form-prompt">
+          <h2 id="tituloFormPrompt">2. Construir y Almacenar Prompt</h2>
+          <span id="indicadorEdicion" class="alerta-edicion" style="display: none;">Modo Edición</span>
+        </div>
+        <p class="texto-ayuda">Redacta una instrucción para la IA, elígela en una caja y conéctala si deseas.</p>
+
+        <form id="formPrompt">
+          <input type="hidden" id="editandoId" value="">
+
+          <div class="dos-columnas">
+            <div class="grupo">
+              <label for="codigoPrompt">Código del Prompt (Alfanumérico):</label>
+              <input type="text" id="codigoPrompt" placeholder="Ej: PRM-01" required maxlength="10">
+              <small>Código único alfanumérico.</small>
+            </div>
+
+            <div class="grupo">
+              <label for="cajaDestino">Guardar en la Caja:</label>
+              <select id="cajaDestino" required>
+                <option value="">-- Elige una caja --</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grupo">
+            <label for="tituloPrompt">Título o Tema del Prompt:</label>
+            <input type="text" id="tituloPrompt" placeholder="Ej: Explicar ciclo For en JavaScript" required
+              maxlength="80">
+          </div>
+
+          <div class="grupo">
+            <label for="conectarCon">🔗 Conectar con otro prompt (Opcional):</label>
+            <select id="conectarCon">
+              <option value="">-- Sin conexión --</option>
+            </select>
+            <small>Enlaza este prompt como paso siguiente o continuación de otro.</small>
+          </div>
+
+          <div class="grupo">
+            <label for="contenidoPrompt">Contenido de la Instrucción (Prompt para la IA):</label>
+            <textarea id="contenidoPrompt" rows="4"
+              placeholder="Escribe aquí la orden o instrucción para ChatGPT, Claude o Gemini..." required></textarea>
+          </div>
+
+          <div class="acciones-formulario">
+            <button type="submit" id="btnGuardarPrompt" class="btn btn-principal">+ Guardar Prompt</button>
+            <button type="button" id="btnCancelarEdicion" class="btn btn-cancelar" style="display: none;">Cancelar
+              Edición</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+
+    <div class="seccion-listado">
+      <div class="cabecera-listado">
+        <h2>Prompts y Cajas Almacenadas</h2>
+        <input type="text" id="inputBuscar" class="input-buscador" placeholder="🔍 Buscar por código, título o tema...">
+      </div>
+
+      <div id="contenedorCajas" class="lista-cajas"></div>
+      <div id="sinResultados" class="aviso-vacio" style="display: none;">
+        No hay registros que coincidan con la búsqueda.
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="pie-pagina">
+    <p>Proyecto Formativo SENA &bull; Gestor Alfanumérico de Prompts &bull; Desarrollado con HTML, CSS y JavaScript</p>
+  </footer>
+
+  <script src="index.js"></script>
+</body>
+
+</html>
